@@ -1,41 +1,26 @@
-import type { MetaFunction } from "@remix-run/cloudflare";
+import type { LoaderFunction } from "@remix-run/cloudflare";
+import { json } from "@remix-run/cloudflare";
+import { useLoaderData } from "@remix-run/react";
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    {
-      name: "description",
-      content: "Welcome to Remix on Cloudflare!",
-    },
-  ];
+export const loader: LoaderFunction = async ({ context, params }) => {
+  const { env, cf, ctx } = context.cloudflare;
+  console.log("debug", env)
+  // let { results } = []
+  // const stmt = env.DB.prepare('SELECT name FROM users LIMIT 3');
+  // const { results } = await stmt.all();
+  // console.log(results);
+  return ""
 };
 
 export default function Index() {
+  const results = useLoaderData<typeof loader>();
   return (
-    <div className="font-sans p-4">
-      <h1 className="text-3xl">Welcome to Remix on Cloudflare</h1>
-      <ul className="list-disc mt-4 pl-6 space-y-2">
-        <li>
-          <a
-            className="text-blue-700 underline visited:text-purple-900"
-            target="_blank"
-            href="https://remix.run/docs"
-            rel="noreferrer"
-          >
-            Remix Docs
-          </a>
-        </li>
-        <li>
-          <a
-            className="text-blue-700 underline visited:text-purple-900"
-            target="_blank"
-            href="https://developers.cloudflare.com/pages/framework-guides/deploy-a-remix-site/"
-            rel="noreferrer"
-          >
-            Cloudflare Pages Docs - Remix guide
-          </a>
-        </li>
-      </ul>
+    <div>
+      <h1>Welcome to Remix</h1>
+      <div>
+        A value from D1:
+        <pre>{JSON.stringify(results)}</pre>
+      </div>
     </div>
   );
 }
