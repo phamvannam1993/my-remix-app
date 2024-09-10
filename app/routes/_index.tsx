@@ -5,11 +5,9 @@ import { useLoaderData } from "@remix-run/react";
 export const loader: LoaderFunction = async ({ context, params }) => {
   const { env, cf, ctx } = context.cloudflare;
   console.log("debug", env)
-  // let { results } = []
-  // const stmt = env.DB.prepare('SELECT name FROM users LIMIT 3');
-  // const { results } = await stmt.all();
-  // console.log(results);
-  return ""
+  const stmt = env.DB.prepare('SELECT * FROM Customers LIMIT 3');
+  const { results } = await stmt.all();
+  return json(results)
 };
 
 export default function Index() {
